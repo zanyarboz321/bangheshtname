@@ -441,6 +441,27 @@
     cards.forEach(c=>obs.observe(c));
   }
 </script>
-
+<script>
+  (function() {
+    const dogruSifre = "466859";
+    // Daha önce şifre girilmiş mi kontrol et
+    if (localStorage.getItem("site_giris_izni") === "true") {
+      return; // Giriş yapıldıysa şifre sorma
+    }
+    
+    let girilenSifre = prompt("Lütfen şifreyi girin:");
+    while (girilenSifre !== dogruSifre) {
+      if (girilenSifre === null) {
+        // İptal edilirse sayfayı boş bir yere yönlendir veya engelle
+        document.body.innerHTML = "<h2>Erişim reddedildi.</h2>";
+        throw new Error("Erişim reddedildi.");
+      }
+      girilenSifre = prompt("Yanlış şifre! Lütfen tekrar deneyin:");
+    }
+    
+    // Doğru şifre girilirse tarayıcıya kaydet
+    localStorage.setItem("site_giris_izni", "true");
+  })();
+</script>
 </body>
 </html>
